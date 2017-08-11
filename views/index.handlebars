@@ -1,15 +1,15 @@
 <div class ="container">
 <div class="row">
-<div class="col-lg-4" id="not_devoured">
+<div class="col-lg-5" id="not_devoured">
   <h2>Burgers</h2>
 
   {{#each burgers}}
     {{#unless this.devoured}}
       <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <span class="label label-default burger_label">{{this.id}}. {{this.burger_name}}</span>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <form action="/{{this.id}}?_method=PUT" method="POST">
           <input type="text" id="cname" name="customer_name" placeholder="customer?">
           <input type="hidden" name="devoured" value="true">
@@ -22,8 +22,8 @@
   {{/each}}
 
 </div>
-<div class="col-lg-4"></div>
-<div class="col-lg-4" id="devoured">
+<div class="col-lg-2"></div>
+<div class="col-lg-5" id="devoured">
   <h2>Devoured Burgers</h2>
 
   {{#each burgers}}
@@ -34,7 +34,6 @@
     {{/if}}
   {{/each}}
 
-<br>
 </div>
 </div>
 <br><br>
