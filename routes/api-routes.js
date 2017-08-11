@@ -2,39 +2,46 @@ var db = require("../models");
 
 module.exports = function(app) {
 	app.get("/", function(req, res) {
-    console.log(db);
-    db.burgers.findAll({}).then(function(result) {
-        var hbsObject = {
-      		burgers: result
-    	};
-    console.log(hbsObject);
-    res.render("index", hbsObject);
+    db.Burgers.findAll({
+      include: [ db.Customer ],
+      order: ["burger_name"],
+    }).then(function(result) {
+      var hbsObject = {
+        burgers: result
+      };
+      res.render("index", hbsObject);
     });
   });
 
   app.post("/", function(req, res) {
-    db.burgers.create({
-      burger_name: req.body.name,
-    }).then(function(result) {
+    db.Burgers.create(req.body).then(function(result) {
       res.redirect("/");
     })
     .catch(function(err) {
-      res.json(err);
+      console.log(err.errors[0].message);
     });
   });
 
   app.put("/:id", function(req, res) {
-      db.burgers.update({
-      devoured: req.body.devoured
-    }, {
-      where: {
-        id: req.params.id
-      }
+    db.Customer.create({
+      customer_name : req.body.customer_name
     }).then(function(result) {
-      res.redirect("/");
+        db.Burgers.update({
+          devoured: req.body.devoured,
+          CustomerId: result.id
+        }, {
+        where: {
+          id: req.params.id
+        }
+      }).then(function(result) {
+        res.redirect("/");
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
     })
     .catch(function(err) {
-      res.json(err);
+      console.log(err.errors[0].message);
     });
   });
 }

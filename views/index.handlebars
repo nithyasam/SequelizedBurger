@@ -6,11 +6,12 @@
   {{#each burgers}}
     {{#unless this.devoured}}
       <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-6">
         <span class="label label-default burger_label">{{this.id}}. {{this.burger_name}}</span>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <form action="/{{this.id}}?_method=PUT" method="POST">
+          <input type="text" id="cname" name="customer_name" placeholder="customer?">
           <input type="hidden" name="devoured" value="true">
           <button type="submit">devoure it</button>
         </form>
@@ -28,7 +29,7 @@
   {{#each burgers}}
     {{#if this.devoured}}
         <br>
-        <span class="label label-success burger_label">{{this.id}}. {{this.burger_name}}</span>
+        <span class="label label-success burger_label">{{this.id}}. {{this.burger_name}} eaten by {{this.Customer.customer_name}}</span>
         <br>
     {{/if}}
   {{/each}}
@@ -43,8 +44,8 @@
 
 <form class="create-update-form" action="/" method="POST">
   <div class="form-group">
-    <label for="bu">Burger Name:</label>
-    <input type="text" id="bu" name="name">
+    <label for="bu">Enter the burger name you want to order:</label>
+    <input type="text" id="bu" name="burger_name">
   </div>
   <button type="submit" class="btn btn-default">Add Burger</button>
 </form>
